@@ -38,14 +38,16 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            findNavController()
+                .navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
-        binding.list.layoutManager = GridLayoutManager(context,7) //　11/11このlistが赤くなる理由は現在謎。
-        val worktimes = realm.where<WorkTime>().equalTo("date",getMonth的な)//findAll()   11/11 嘘。これやると全日付取得するため
+        binding.list.layoutManager = GridLayoutManager(context,7)//　11/11このlistが赤くなる理由は現在謎。
+        val worktimes = realm.where<WorkTime>()./*equalTo("date",getMonth的な)*/findAll() //  11/11 嘘。これやると全日付取得するため
                                                             //嘘じゃないかも　取得するだけなら問題ないため
                                                              //該当月のみ取得する方法が必要。
                                                             //11/15 equalToで該当月が得られるのでは
+                                                            // 11/15 listはfragment_secondeのid名のひとつだったので、それなしで書いてたらダメだったという話
         val adapter = WorkTimeAdapter(worktimes)
         binding.list.adapter = adapter
     }

@@ -9,13 +9,24 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import java.lang.reflect.Type
 import java.text.DateFormat
+import java.util.*
 
 class WorkTimeAdapter(data: OrderedRealmCollection<WorkTime>) :
     RealmRecyclerViewAdapter<WorkTime,WorkTimeAdapter.ViewHolder>(data,true){
+    private var dateArray: List<Date?> = ArrayList<Date?>()
+    private val mDateManager: DateManager
 
         init {
             setHasStableIds(true)
+            mDateManager = DateManager()
+       //     dateArray = mDateManager.getDays()  //月を取得
         }
+
+    //月の日数を取得
+//    override fun getCount(): Int {
+//        return dateArray.size
+//    }
+
     //セルの中身
     //text1 - text4　とされるものを適切に定義する必要。
     class ViewHolder(cell: View) : RecyclerView.ViewHolder(cell){
@@ -32,6 +43,7 @@ class WorkTimeAdapter(data: OrderedRealmCollection<WorkTime>) :
         val view = inflater.inflate(R.layout.calender_cell // 11/11 text1 - text4を表示するリスト) p320いわく、inflateメソッド//
                                                             // 11/11/18:00 calender_cell.xml作って、android.R.layout~　をR.layoutにしたら読んでくれた
             ,parent, false)
+
         return ViewHolder(view)
     }
 
@@ -40,15 +52,15 @@ class WorkTimeAdapter(data: OrderedRealmCollection<WorkTime>) :
     override fun onBindViewHolder ( holder: WorkTimeAdapter.ViewHolder,position: Int ){
         val worktime: WorkTime? = getItem(position) // 11/11 worktimeはここで作った変数。p319
         holder.date.text = android.text.format.DateFormat.format(
-            "yyyy/MM/dd HH:mm", worktime?.date)
+            "dd", worktime?.date)
         holder.attendance.text = android.text.format.DateFormat.format(
-            "yyyy/MM/dd HH:mm",worktime?.attendance)
+            "HH:mm",worktime?.attendance)
         holder.leave.text = android.text.format.DateFormat.format(
-            "yyyy/MM/dd HH:mm", worktime?.leaving)
-
-        //文字列のためformat不要?
-        holder.workTime.text = android.text.format.DateFormat.format(
-            "yyyy/MM/dd HH:mm", worktime?.workTime)
+            "HH:mm", worktime?.leaving)
+//
+//        //文字列のためformat不要?
+//        holder.workTime.text = android.text.format.DateFormat.format(
+//            "HH:mm", worktime?.workTime)
 
     }
 
