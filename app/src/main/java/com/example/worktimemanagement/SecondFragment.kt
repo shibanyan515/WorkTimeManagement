@@ -42,9 +42,10 @@ class SecondFragment : Fragment() {
         }
 
         binding.list.layoutManager = GridLayoutManager(context,7) //　11/11このlistが赤くなる理由は現在謎。
-        val worktimes = realm.where<WorkTime>().//findAll()   11/11 嘘。これやると全日付取得するため
+        val worktimes = realm.where<WorkTime>().equalTo("date",getMonth的な)//findAll()   11/11 嘘。これやると全日付取得するため
                                                             //嘘じゃないかも　取得するだけなら問題ないため
                                                              //該当月のみ取得する方法が必要。
+                                                            //11/15 equalToで該当月が得られるのでは
         val adapter = WorkTimeAdapter(worktimes)
         binding.list.adapter = adapter
     }
